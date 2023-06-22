@@ -1,0 +1,65 @@
+﻿@inject IDialogService DialogService
+
+@page "/";
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudGrid>
+        <MudStack Style="width: 100%">
+            <MudFileUpload T="IReadOnlyList<IBrowserFile>" OnFilesChanged="OnInputFileChanged" Hidden="false" Class="flex-1" InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20" InputStyle="opacity:0"
+                           @ondragenter="@SetDragClass" @ondragleave="@ClearDragClass" @ondragend="@ClearDragClass">
+                <ButtonTemplate>
+                    <MudPaper Height="300px" Outlined="true" Class="@DragClass">
+                        @if (File == null)
+                        {
+                            <MudText Typo="Typo.h6" Color="Color.Primary" Style="color: rgb(87,87,87)">
+                                Arraste e solte o arquivo aqui ou clique!
+                            </MudText>
+                        }
+                        else
+                        {
+                            <MudChip Color="Color.Dark" Text="@File.Name" />
+                        }
+                    </MudPaper>
+                </ButtonTemplate>
+            </MudFileUpload>
+            <MudToolBar DisableGutters="true" Class="gap-4">
+                <MudButton OnClick="UploadImage" Disabled="@(File == null)" Color="Color.Primary" Variant="Variant.Filled">Enviar Imagem</MudButton>
+                <MudButton OnClick="Clear" Disabled="@(File == null)" Color="Color.Error" Variant="Variant.Filled">Limpar Campo</MudButton>
+            </MudToolBar>
+        </MudStack>
+    </MudGrid>
+
+    <MudGrid Class="mt-10">
+        @if (Busy)
+        {
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+        }
+        @if (!Images.Any())
+        {
+            <MudAlert Severity="Severity.Warning" ContentAlignment="HorizontalAlignment.Center" Style="width: 100%">Você ainda não possui imagens!</MudAlert>
+        }
+        @foreach (var item in Images)
+        {
+            <MudItem md="4">
+                <MudCard>
+                    <MudCardMedia Image="@item.ImagePath" Height="250" />
+                    <MudCardActions>
+                        <MudFileUpload T="IReadOnlyList<IBrowserFile>" OnFilesChanged="((value) => OpenAlertUpdateImage(item.Id, value))">
+                            <ButtonTemplate>
+                                <MudButton HtmlTag="label" Class="mb-1"
+                                       Variant="Variant.Filled"
+                                       Color="Color.Primary"
+                                       for="@context">
+                                    Atualizar Imagem
+                                </MudButton>
+                            </ButtonTemplate>
+                        </MudFileUpload>
+                        <MudSpacer />
+                        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="(() => OpenAlertDeleteImage(item.Id))">Deletar Imagem</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+</MudContainer>
+

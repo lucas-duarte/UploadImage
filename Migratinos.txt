@@ -1,0 +1,4 @@
+Para adicionar uma migrations
+dotnet ef migrations add InitialMigration --context UpdateImageDbContext --project UploadImage.Database\UploadImage.Database.csproj --startup-project UploadImage.API\UploadImage.API.csproj
+
+dotnet ef database update --context UpdateImageDbContext --project UploadImage.Database\UploadImage.Database.csproj --startup-project UploadImage.API\UploadImage.API.csproj
