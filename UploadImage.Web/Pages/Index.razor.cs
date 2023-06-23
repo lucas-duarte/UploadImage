@@ -83,7 +83,7 @@ namespace UploadImage.Web.Pages
 
                 using (var httpClient = new HttpClient())
                 {
-                    var response = await httpClient.PostAsync("https://localhost:7167/api/Image/Create", content);
+                    var response = await httpClient.PostAsync("https://upload-imagens-api.azurewebsites.net/api/Image/Create", content);
 
                     Busy = false;
 
@@ -113,7 +113,7 @@ namespace UploadImage.Web.Pages
 
             using (var httpClient = new HttpClient())
             {
-                var response = await httpClient.GetAsync("https://localhost:7167/api/Image/List");
+                var response = await httpClient.GetAsync("https://upload-imagens-api.azurewebsites.net/api/Image/List");
 
                 Busy = false;
 
@@ -148,7 +148,7 @@ namespace UploadImage.Web.Pages
 
             using (var httpClient = new HttpClient())
             {
-                var response = await httpClient.DeleteAsync($"https://localhost:7167/api/Image/{id}");
+                var response = await httpClient.DeleteAsync($"https://upload-imagens-api.azurewebsites.net/api/Image/{id}");
 
                 Busy = false;
 
@@ -185,7 +185,7 @@ namespace UploadImage.Web.Pages
 
             using (var httpClient = new HttpClient())
             {
-                var response = await httpClient.PutAsync($"https://localhost:7167/api/Image/{id}", content);
+                var response = await httpClient.PutAsync($"https://upload-imagens-api.azurewebsites.net/api/Image/{id}", content);
 
                 Busy = false;
 
