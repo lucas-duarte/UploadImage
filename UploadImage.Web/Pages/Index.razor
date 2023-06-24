@@ -33,37 +33,32 @@
         @if (Busy)
         {
             <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
-
         }
         @if (!Images.Any())
         {
             <MudAlert Severity="Severity.Warning" ContentAlignment="HorizontalAlignment.Center" Style="width: 100%">Você ainda não possui imagens!</MudAlert>
         }
-
-        @if (!Busy)
+        @foreach (var item in Images)
         {
-            @foreach (var item in Images)
-            {
-                <MudItem md="4">
-                    <MudCard>
-                        <MudCardMedia Image="@item.ImagePath" Height="250" />
-                        <MudCardActions>
-                            <MudFileUpload T="IReadOnlyList<IBrowserFile>" OnFilesChanged="((value) => OpenAlertUpdateImage(item.Id, value))">
-                                <ButtonTemplate>
-                                    <MudButton HtmlTag="label" Class="mb-1"
-                                           Variant="Variant.Filled"
-                                           Color="Color.Primary"
-                                           for="@context">
-                                        Atualizar Imagem
-                                    </MudButton>
-                                </ButtonTemplate>
-                            </MudFileUpload>
-                            <MudSpacer />
-                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="(() => OpenAlertDeleteImage(item.Id))">Deletar Imagem</MudButton>
-                        </MudCardActions>
-                    </MudCard>
-                </MudItem>
-            }
+            <MudItem md="4">
+                <MudCard>
+                    <MudCardMedia Image=@($"{item.ImagePath}?timestamp={DateTime.Now.Ticks}") Height="250" />
+                    <MudCardActions>
+                        <MudFileUpload T="IReadOnlyList<IBrowserFile>" OnFilesChanged="((value) => OpenAlertUpdateImage(item.Id, value))">
+                            <ButtonTemplate>
+                                <MudButton HtmlTag="label" Class="mb-1"
+                                       Variant="Variant.Filled"
+                                       Color="Color.Primary"
+                                       for="@context">
+                                    Atualizar Imagem
+                                </MudButton>
+                            </ButtonTemplate>
+                        </MudFileUpload>
+                        <MudSpacer />
+                        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="(() => OpenAlertDeleteImage(item.Id))">Deletar Imagem</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
         }
     </MudGrid>
 </MudContainer>

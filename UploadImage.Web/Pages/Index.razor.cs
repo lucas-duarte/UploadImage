@@ -14,8 +14,6 @@ namespace UploadImage.Web.Pages
     public partial class Index : ComponentBase
     {
         private IBrowserFile? File { get; set; }
-        [Inject] protected NavigationManager NavigationManager { get; set; }
-
 
         private bool Busy { get; set; } = true;
 
@@ -213,8 +211,6 @@ namespace UploadImage.Web.Pages
                 }
 
                 await Clear();
-
-                NavigationManager.NavigateTo("/", forceLoad: true);
 
             }
         }
