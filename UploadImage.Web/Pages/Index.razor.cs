@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 using Newtonsoft.Json;
+using System;
 using System.Net;
 using System.Text;
 using UploadImage.Web.Helpers;
@@ -13,6 +14,9 @@ namespace UploadImage.Web.Pages
     public partial class Index : ComponentBase
     {
         private IBrowserFile? File { get; set; }
+        [Inject] protected NavigationManager NavigationManager { get; set; }
+
+
         private bool Busy { get; set; } = true;
 
         private static string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full z-10";
@@ -209,9 +213,9 @@ namespace UploadImage.Web.Pages
                 }
 
                 await Clear();
-                await GetImagens();
 
-                StateHasChanged();
+                NavigationManager.NavigateTo("/", forceLoad: true);
+
             }
         }
 
@@ -269,6 +273,8 @@ namespace UploadImage.Web.Pages
             }
 
             StateHasChanged();
+
+            await GetImagens();
         }
     }
 
